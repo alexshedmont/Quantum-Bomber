@@ -1,0 +1,90 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+    color: white;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("/Montserrat-Regular.ttf");
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: url("./bg.png") no-repeat center;
+    background-size: cover;
+}
+
+.bomber_inputs {
+    margin: 10px 0;
+}
+
+.logo {
+    text-shadow: 2px 2px 2px black;
+}
+
+.bomber_inputs input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid white;
+    color: black;
+    transition: .2s ease;
+}
+
+.bomber_inputs input:focus {
+    box-shadow: 0 0 7px 2px rgb(68, 130, 255);
+}
+
+
+.circles  {
+    width: 100px;
+}
+
+.phone  {
+    width: 200px;
+}
+
+.attack_btn {
+    background: rgb(41, 101, 221);
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 100px;
+    transition: .2s ease;
+    cursor: pointer;
+    height: 50px;
+    width: 110px;
+    font-size: 15px;
+}
+
+.attack_btn:hover {
+    background: rgb(58, 109, 211);
+    width: 150px;
+}
+
+.copyright {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+.state {
+    position: absolute;
+    bottom: 100px;
+    opacity: 0;
+    transition: .1s ease;
+}
+
+.state.visible {
+    opacity: 100;
+}

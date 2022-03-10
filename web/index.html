@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Bomber</title>
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    
+    <h1 class="logo">Quantum Bomber 1.0</h1>
+
+    <div class="bomber_inputs">
+        <input class="phone" type="text" placeholder="Номер телефона">
+        <input class="circles" type="text" placeholder="Круги">
+    </div>
+
+    <button class="attack_btn">Начать</button>        
+
+    <p class="state"></p>
+
+    <p class="copyright">&copy; By Александр Исамбетов</p>
+
+    <script type="text/javascript" src="eel.js"></script>
+    <script type="text/javascript">
+
+        let state = document.querySelector(".state");
+        let button = document.querySelector(".attack_btn");
+        let interval = null
+
+        button.addEventListener("click", function(){
+            if ( interval == null ) {
+                button.innerText = "Завершить";                
+                interval = setInterval(() => {
+                    bomber_state()
+                }, 100);   
+                bomber_attack();            
+            } else {
+                clearInterval(interval)
+                interval = null
+                //state.innerHTML = "Атака завершена.";                
+                button.innerText = "Начать"
+            }
+
+            state.classList.toggle("visible");
+        })
+
+        async function bomber_state() {
+            state.innerHTML = await eel.get_state()();
+        }
+
+        async function bomber_attack() {
+
+            let phone = document.querySelector(".phone").value
+            let circles = document.querySelector(".circles").value
+
+            state.innerHTML = await eel.start_attack(phone, circles)();
+
+        }
+
+    </script>
+
+</body>
+</html>
